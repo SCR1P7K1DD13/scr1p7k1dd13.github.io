@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hacking on For the curious ones</title>
+    <link>https://scr1p7k1dd13.github.io/tags/hacking/</link>
+    <description>Recent content in Hacking on For the curious ones</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;#&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;V 1.2&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 29 Apr 2021 12:35:34 +0530</lastBuildDate><atom:link href="https://scr1p7k1dd13.github.io/tags/hacking/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Silent Shell</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/04/the-silent-shell/</link>
+      <pubDate>Thu, 29 Apr 2021 12:35:34 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/04/the-silent-shell/</guid>
+      <description>We live in a world where everything is connected through the internet. Something that is considered as a blessing and a curse at the same time. Almost everyone from developers to students uses the internet every day, but they are not the only ones using the internet, some people use the internet for personal or financial gain, people who work while the world sleeps, people who are constantly looking for security issues for exploitation, the “Hackers”.</description>
+    </item>
+    
+  </channel>
+</rss>

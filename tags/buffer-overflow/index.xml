@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Buffer overflow on For the curious ones</title>
+    <link>https://scr1p7k1dd13.github.io/tags/buffer-overflow/</link>
+    <description>Recent content in Buffer overflow on For the curious ones</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;#&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;V 1.2&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 10 Aug 2021 14:33:37 +0530</lastBuildDate><atom:link href="https://scr1p7k1dd13.github.io/tags/buffer-overflow/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Missing Bits:Part 1</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-1/</link>
+      <pubDate>Tue, 10 Aug 2021 14:33:37 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-1/</guid>
+      <description>I remember my college days, the good old days. The time we spend with friends. The most troublesome part of it was the exam. when I try to remember the answer to a question all I can remember was English songs. I never questioned that behavior, maybe because I love songs or maybe even if I try I won&amp;rsquo;t be able to find an answer. Now when I recall those moments I can tell you one thing for sure, my brain cells holding question answers were overwritten by song lyrics.</description>
+    </item>
+    
+    <item>
+      <title>The Missing Bits:Part 2</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-2/</link>
+      <pubDate>Tue, 10 Aug 2021 13:34:28 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-2/</guid>
+      <description>We now know the basics but that&amp;rsquo;s not enough we&amp;rsquo;ve to dig a little deeper. Data is being pushed and popped out of the stack as a program executes. But have you ever wondered how the system keeps track of this execution? That&amp;rsquo;s when registers come into play. Registers are small memory units in the CPU capable of holding a small amount of data (memory addresses). As a program execute these registers instruct the system what to execute next and where to return after a function terminates.</description>
+    </item>
+    
+    <item>
+      <title>The Missing Bits:Part 3</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-3/</link>
+      <pubDate>Tue, 10 Aug 2021 11:48:10 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-3/</guid>
+      <description>Buckle up, things are about to get serious now. Consider this as a real-world CTF where the machine is intentionally made vulnerable. Similarly, we will make a vulnerable C program and compile it by disabling all stack protection mechanisms. The compiler and OS will protect the system from such attacks by enabling protection mechanisms such as ASLR&amp;amp;NX .
+ ASLRrandomizes the location where system executables are loaded into memory. Making it difficult to guess memory address.</description>
+    </item>
+    
+  </channel>
+</rss>

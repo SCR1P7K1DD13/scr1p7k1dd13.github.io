@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on For the curious ones</title>
+    <link>https://scr1p7k1dd13.github.io/tags/</link>
+    <description>Recent content in Tags on For the curious ones</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;#&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;V 1.2&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 10 Aug 2021 14:33:37 +0530</lastBuildDate><atom:link href="https://scr1p7k1dd13.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Buffer overflow</title>
+      <link>https://scr1p7k1dd13.github.io/tags/buffer-overflow/</link>
+      <pubDate>Tue, 10 Aug 2021 14:33:37 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/tags/buffer-overflow/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cybersecurity</title>
+      <link>https://scr1p7k1dd13.github.io/tags/cybersecurity/</link>
+      <pubDate>Tue, 10 Aug 2021 14:33:37 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/tags/cybersecurity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hacking</title>
+      <link>https://scr1p7k1dd13.github.io/tags/hacking/</link>
+      <pubDate>Thu, 29 Apr 2021 12:35:34 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/tags/hacking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Macro</title>
+      <link>https://scr1p7k1dd13.github.io/tags/macro/</link>
+      <pubDate>Thu, 29 Apr 2021 12:35:34 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/tags/macro/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Reverse shell</title>
+      <link>https://scr1p7k1dd13.github.io/tags/reverse-shell/</link>
+      <pubDate>Thu, 29 Apr 2021 12:35:34 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/tags/reverse-shell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Password security</title>
+      <link>https://scr1p7k1dd13.github.io/tags/password-security/</link>
+      <pubDate>Tue, 13 Apr 2021 12:35:34 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/tags/password-security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>burpsuite</title>
+      <link>https://scr1p7k1dd13.github.io/tags/burpsuite/</link>
+      <pubDate>Fri, 12 Mar 2021 12:35:29 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/tags/burpsuite/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dns tunneling</title>
+      <link>https://scr1p7k1dd13.github.io/tags/dns-tunneling/</link>
+      <pubDate>Fri, 12 Mar 2021 12:35:29 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/tags/dns-tunneling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mimikatz</title>
+      <link>https://scr1p7k1dd13.github.io/tags/mimikatz/</link>
+      <pubDate>Wed, 03 Mar 2021 12:35:23 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/tags/mimikatz/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>recon</title>
+      <link>https://scr1p7k1dd13.github.io/tags/recon/</link>
+      <pubDate>Fri, 26 Feb 2021 10:27:43 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/tags/recon/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

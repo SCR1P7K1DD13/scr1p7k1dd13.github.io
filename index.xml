@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>For the curious ones</title>
+    <link>https://scr1p7k1dd13.github.io/</link>
+    <description>Recent content on For the curious ones</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;#&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;V 1.2&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 10 Aug 2021 14:33:37 +0530</lastBuildDate><atom:link href="https://scr1p7k1dd13.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Missing Bits:Part 1</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-1/</link>
+      <pubDate>Tue, 10 Aug 2021 14:33:37 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-1/</guid>
+      <description>I remember my college days, the good old days. The time we spend with friends. The most troublesome part of it was the exam. when I try to remember the answer to a question all I can remember was English songs. I never questioned that behavior, maybe because I love songs or maybe even if I try I won&amp;rsquo;t be able to find an answer. Now when I recall those moments I can tell you one thing for sure, my brain cells holding question answers were overwritten by song lyrics.</description>
+    </item>
+    
+    <item>
+      <title>The Missing Bits:Part 2</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-2/</link>
+      <pubDate>Tue, 10 Aug 2021 13:34:28 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-2/</guid>
+      <description>We now know the basics but that&amp;rsquo;s not enough we&amp;rsquo;ve to dig a little deeper. Data is being pushed and popped out of the stack as a program executes. But have you ever wondered how the system keeps track of this execution? That&amp;rsquo;s when registers come into play. Registers are small memory units in the CPU capable of holding a small amount of data (memory addresses). As a program execute these registers instruct the system what to execute next and where to return after a function terminates.</description>
+    </item>
+    
+    <item>
+      <title>The Missing Bits:Part 3</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-3/</link>
+      <pubDate>Tue, 10 Aug 2021 11:48:10 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/08/the-missing-bitspart-3/</guid>
+      <description>Buckle up, things are about to get serious now. Consider this as a real-world CTF where the machine is intentionally made vulnerable. Similarly, we will make a vulnerable C program and compile it by disabling all stack protection mechanisms. The compiler and OS will protect the system from such attacks by enabling protection mechanisms such as ASLR&amp;amp;NX .
+ ASLRrandomizes the location where system executables are loaded into memory. Making it difficult to guess memory address.</description>
+    </item>
+    
+    <item>
+      <title>The Silent Shell</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/04/the-silent-shell/</link>
+      <pubDate>Thu, 29 Apr 2021 12:35:34 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/04/the-silent-shell/</guid>
+      <description>We live in a world where everything is connected through the internet. Something that is considered as a blessing and a curse at the same time. Almost everyone from developers to students uses the internet every day, but they are not the only ones using the internet, some people use the internet for personal or financial gain, people who work while the world sleeps, people who are constantly looking for security issues for exploitation, the “Hackers”.</description>
+    </item>
+    
+    <item>
+      <title>The art of stealing passwords</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/04/the-art-of-stealing-passwords/</link>
+      <pubDate>Tue, 13 Apr 2021 12:35:34 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/04/the-art-of-stealing-passwords/</guid>
+      <description>The world is going passwordless. Meaning no more memorized secrets instead they make use of “possession factors”, like OTP or software-based authenticators(Authy, Google authenticator). The password-based authentication is coming to an end and adopting new changes will always benefit the security culture. But will it really end?
+No, because it solely relies on the service providers and the user choices. If the website only provides password-based authentication methods then there is no other way but to remember the passwords.</description>
+    </item>
+    
+    <item>
+      <title>Hide &amp; Seek</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/03/hide-seek/</link>
+      <pubDate>Fri, 12 Mar 2021 12:35:29 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/03/hide-seek/</guid>
+      <description>We all love playing Hide &amp;amp; Seek. A game we enjoyed playing in our childhood. The rules were so simple, one person would close their eyes and start counting (often counted as 50) while other players would hide. The seeker then opens his eyes and tries to find the hiders; the first to be found will become the next seeker, and the last is the winner of the round. There are different versions of the game in different regions but we’ll focus on this.</description>
+    </item>
+    
+    <item>
+      <title>The cute cat</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/03/the-cute-cat/</link>
+      <pubDate>Wed, 03 Mar 2021 12:35:23 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/03/the-cute-cat/</guid>
+      <description>The world is changing so does technology. We can see a change of ten years in just one year. The technology is changing so rapidly that even recruiters don’t know how to recruit to a new post.
+But, are we making use of up-to-date configurations and software❓
+You may be wondering if I’m going to discuss cats in this blog. Yes, we are going to talk about something different but interesting.</description>
+    </item>
+    
+    <item>
+      <title>Subdomain Enumeration:Build yourn own tool</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/02/subdomain-enumerationbuild-yourn-own-tool/</link>
+      <pubDate>Fri, 26 Feb 2021 10:27:43 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/02/subdomain-enumerationbuild-yourn-own-tool/</guid>
+      <description>Hello security enthusiasts welcome to yet another blog. In this blog, we will learn how to create a simple subdomain enumeration tool with python. Subdomain enumeration is a critical step in recon since understanding digital assets play a major role in every pentest activity. For the same, we have a various set of tools and techniques created by awesome people in the hacking community. Sublister, Amass, and the list goes on.</description>
+    </item>
+    
+    <item>
+      <title>The Time Eater</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/02/the-time-eater/</link>
+      <pubDate>Tue, 23 Feb 2021 10:27:39 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/02/the-time-eater/</guid>
+      <description>Automating the manual workflow is a great task. This allows us to reduce the time it takes to perform tasks that may take a long time to complete. In penetration testing also we have a wide variety of tools to serve various purposes. For example, let’s consider Recon. If you want to perform recon on targets that have a large scope the initial step will be identifying its digital assets including subdomains, IP’s, etc…But if we don’t have the right tools to do this we will have to use search engine dorks and browse through all the results manually.</description>
+    </item>
+    
+    <item>
+      <title>The Hidden Treassure</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/02/the-hidden-treassure/</link>
+      <pubDate>Wed, 17 Feb 2021 10:14:09 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/02/the-hidden-treassure/</guid>
+      <description>JK Gyllenhaal’s Source Code is one of my favorite movies, but we’re not going to talk about it here. This is not a movie review, but let’s see how to extract source code from compiled Android apps. Let’s first understand what APK is.
+ An Android Package Kit (APK for short) is an archive type package file format used by the Android operating system for distribution and installation of mobile apps.</description>
+    </item>
+    
+  </channel>
+</rss>

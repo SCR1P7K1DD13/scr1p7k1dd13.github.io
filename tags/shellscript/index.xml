@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shellscript on For the curious ones</title>
+    <link>https://scr1p7k1dd13.github.io/tags/shellscript/</link>
+    <description>Recent content in shellscript on For the curious ones</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;#&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;V 1.2&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 23 Feb 2021 10:27:39 +0530</lastBuildDate><atom:link href="https://scr1p7k1dd13.github.io/tags/shellscript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Time Eater</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/02/the-time-eater/</link>
+      <pubDate>Tue, 23 Feb 2021 10:27:39 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/02/the-time-eater/</guid>
+      <description>Automating the manual workflow is a great task. This allows us to reduce the time it takes to perform tasks that may take a long time to complete. In penetration testing also we have a wide variety of tools to serve various purposes. For example, let’s consider Recon. If you want to perform recon on targets that have a large scope the initial step will be identifying its digital assets including subdomains, IP’s, etc…But if we don’t have the right tools to do this we will have to use search engine dorks and browse through all the results manually.</description>
+    </item>
+    
+  </channel>
+</rss>

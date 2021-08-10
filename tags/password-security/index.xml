@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Password security on For the curious ones</title>
+    <link>https://scr1p7k1dd13.github.io/tags/password-security/</link>
+    <description>Recent content in Password security on For the curious ones</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;#&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;V 1.2&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 13 Apr 2021 12:35:34 +0530</lastBuildDate><atom:link href="https://scr1p7k1dd13.github.io/tags/password-security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The art of stealing passwords</title>
+      <link>https://scr1p7k1dd13.github.io/posts/2021/04/the-art-of-stealing-passwords/</link>
+      <pubDate>Tue, 13 Apr 2021 12:35:34 +0530</pubDate>
+      
+      <guid>https://scr1p7k1dd13.github.io/posts/2021/04/the-art-of-stealing-passwords/</guid>
+      <description>The world is going passwordless. Meaning no more memorized secrets instead they make use of “possession factors”, like OTP or software-based authenticators(Authy, Google authenticator). The password-based authentication is coming to an end and adopting new changes will always benefit the security culture. But will it really end?
+No, because it solely relies on the service providers and the user choices. If the website only provides password-based authentication methods then there is no other way but to remember the passwords.</description>
+    </item>
+    
+  </channel>
+</rss>
